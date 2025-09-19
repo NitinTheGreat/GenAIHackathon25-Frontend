@@ -43,6 +43,10 @@ export default function SignupPage() {
                       formFieldInput: { width: "100%" },
                     },
                   }}
+                  path="/signup"
+                  routing="path"
+                  afterSignUpUrl="/dashboard"
+                  afterSignInUrl="/dashboard"
                 />
               </div>
 

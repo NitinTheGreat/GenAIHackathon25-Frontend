@@ -50,6 +50,10 @@ export default function LoginPage() {
                       formFieldInput: { width: "100%" },
                     },
                   }}
+                  path="/login"
+                  routing="path"
+                  afterSignInUrl="/dashboard"
+                  afterSignUpUrl="/dashboard"
                 />
               </div>
             </div>

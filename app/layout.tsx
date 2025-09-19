@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +25,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const afterSignInUrl = process.env.NEXT_PUBLIC_APP_AFTER_SIGN_IN_URL || "/dashboard";
+  const afterSignUpUrl = process.env.NEXT_PUBLIC_APP_AFTER_SIGN_UP_URL || "/dashboard";
   return (
     <ClerkProvider
       appearance={{
@@ -38,6 +34,10 @@ export default function RootLayout({
         signIn: { baseTheme: dark },
         signUp: { baseTheme: dark },
       }}
+      signInUrl="/login"
+      signUpUrl="/signup"
+      afterSignInUrl={afterSignInUrl}
+      afterSignUpUrl={afterSignUpUrl}
     >
       <html lang="en">
         <body
@@ -57,24 +57,7 @@ export default function RootLayout({
               </svg>
             </div>
           </div>
-          {/* Header stays */}
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignInButton mode="modal">
-                <button className="bg-gray-800 text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer hover:bg-gray-700">
-                  Log In
-                </button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer hover:bg-[#5a3be0]">
-                  Sign Up
-                </button>
-              </SignUpButton>
-            </SignedOut>
-            <SignedIn>
-              <UserButton afterSignOutUrl="/" />
-            </SignedIn>
-          </header>
+          <Navbar />
           <div className="relative z-10">{children}</div>
         </body>
       </html>
