@@ -1,5 +1,5 @@
-@import "tailwindcss";
-
+@import 'tailwindcss';
+@import '@clerk/themes/shadcn.css';
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,4 +23,62 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Premium Graphite Anti-Glare Background */
+.graphite-premium-bg {
+  /* Base graphite tone provided: #212126 */
+  --graphite-base: #212126;
+  --graphite-gloss: rgba(255, 255, 255, 0.06);
+  --graphite-sheen: rgba(255, 255, 255, 0.05);
+  --graphite-shadow: rgba(0, 0, 0, 0.4);
+  --graphite-void: rgba(0, 0, 0, 0.0);
+
+  position: absolute;
+  inset: 0;
+  background-color: var(--graphite-base);
+
+  /* Layered gradients to emulate subtle brushed metal + anti-glare sheen */
+  background-image:
+    /* micro texture */
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 2px, rgba(0,0,0,0.02) 2px 4px),
+    /* top-left soft highlight */
+    radial-gradient(80% 60% at 8% 0%, var(--graphite-gloss), transparent 60%),
+    /* upper-right gentle bloom */
+    radial-gradient(60% 50% at 92% 14%, var(--graphite-sheen), transparent 60%),
+    /* center conic sheen */
+    conic-gradient(from 220deg at 50% 50%, var(--graphite-sheen), transparent 18%, transparent 82%, var(--graphite-sheen)),
+    /* diagonal depth */
+    linear-gradient(160deg, rgba(255,255,255,0.02), rgba(0,0,0,0.28)),
+    /* bottom vignette */
+    radial-gradient(120% 80% at 50% 120%, var(--graphite-shadow), var(--graphite-void) 60%);
+
+  background-blend-mode: overlay, overlay, overlay, screen, multiply, normal;
+}
+
+@media (max-width: 640px) {
+  .graphite-premium-bg {
+    /* Reduce the number/intensity of layers on small screens for clarity/perf */
+    background-image:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0 2px, rgba(0,0,0,0.015) 2px 4px),
+      radial-gradient(80% 60% at 10% 0%, rgba(255,255,255,0.05), transparent 58%),
+      linear-gradient(170deg, rgba(255,255,255,0.015), rgba(0,0,0,0.24)),
+      radial-gradient(120% 80% at 50% 120%, rgba(0,0,0,0.36), transparent 60%);
+    background-blend-mode: overlay, overlay, multiply, normal;
+  }
+}
+
+/* Optional: utility for a premium card surface over graphite bg */
+.graphite-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* Clerk: Make auth widgets fully responsive and prevent overflow */
+.cl-signUp-root, .cl-signIn-root, .cl-card {
+  max-width: 100% !important;
+  width: 100% !important;
 }
