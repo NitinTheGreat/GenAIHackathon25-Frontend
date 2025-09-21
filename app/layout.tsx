@@ -4,6 +4,7 @@ import { dark } from "@clerk/themes";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import WarmBackend from "../components/WarmBackend";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,6 +59,7 @@ export default function RootLayout({
             </div>
           </div>
           <Navbar />
+          <WarmBackend />
           <div className="relative z-10">{children}</div>
         </body>
       </html>
