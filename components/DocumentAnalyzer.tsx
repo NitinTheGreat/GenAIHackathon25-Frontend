@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Upload, FileText, AlertTriangle, MessageSquare, Loader2 } from "lucide-react"
 import RiskCard from "./RiskCard"
 import LoadingScreen from "./LoadingScreen"
+import ReactMarkdown from "react-markdown"
 
 interface RiskItem {
   risk_category: string
@@ -309,9 +310,9 @@ export default function DocumentAnalyzer() {
                     <h4 className="font-semibold text-foreground">
                       Q{index + 1}: {question}
                     </h4>
-                    <p className="text-muted-foreground mt-1">
-                      A{index + 1}: {results.data.answers[index]}
-                    </p>
+                    <div className="text-muted-foreground mt-1 prose prose-invert max-w-none whitespace-pre-wrap">
+                      <ReactMarkdown>{results.data.answers[index]}</ReactMarkdown>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -320,7 +321,9 @@ export default function DocumentAnalyzer() {
             {results.type === "summary" && (
               <div className="prose prose-invert max-w-none">
                 <h3 className="text-foreground">Document Summary</h3>
-                <p className="text-muted-foreground whitespace-pre-wrap">{results.data.summary}</p>
+                <div className="prose prose-invert max-w-none text-muted-foreground whitespace-pre-wrap">
+                  <ReactMarkdown>{results.data.summary}</ReactMarkdown>
+                </div>
               </div>
             )}
 
