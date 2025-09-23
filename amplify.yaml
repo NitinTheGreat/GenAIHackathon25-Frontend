@@ -3,12 +3,13 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        - npm ci --cache .npm --prefer-offline
     build:
       commands:
-        # Write Amplify environment vars into Next.js runtime env
+        # Dump Amplify env vars into .env.production
         - echo "Writing env vars..."
-        - env | grep -E '^(NEXT_PUBLIC_|MY_SERVER_VAR_)' >> .env.production || true
+        - env | grep -E '^(NEXT_PUBLIC_|CLERK_|FASTAPI_)' >> .env.production || true
+        - cat .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -16,5 +17,5 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/*
       - .next/cache/**/*
+      - .npm/**/*
